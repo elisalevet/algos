@@ -59,3 +59,40 @@ const areThereDuplicates = (...args) => {
 const areThereDuplicates = () => {
   return new Set(arguments).size !== arguments.length;
 };
+
+//Average pair sum
+// it is a function that given a sorted array and a target num, dtermine if there is a pair of values in that array where the average of the pair equals the target average. there can be more than one pair that matches the average target
+function averagePair(arr, num) {
+  let start = 0;
+  let end = arr.length - 1;
+  while (start < end) {
+    let avg = (arr[start] + arr[end]) / 2;
+    if (avg === num) return true;
+    else if (avg < num) start++;
+    else end--;
+  }
+  return false;
+}
+
+console.log(averagePair([1, 2, 3], 2.5)); //true
+console.log(averagePair([1, 3, 3, 5, 6, 7, 10, 12, 19], 8)); //true
+console.log(averagePair([-1, 0, 3, 4, 5, 6], 4.1)); // false
+console.log(averagePair([], 4)); // false
+
+//Move Zeroes
+// Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+var moveZeroes = function (nums) {
+  let startIdx = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] !== 0) {
+      let temp = nums[startIdx];
+      nums[startIdx] = nums[i];
+      nums[i] = temp;
+
+      startIdx++;
+    }
+  }
+  return nums;
+};
