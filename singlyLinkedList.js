@@ -49,4 +49,92 @@ class SinglyLinkedList {
     }
     return current;
   }
+
+  shift() {
+    if (!this.head) return undefined;
+    let removedHead = this.head;
+    this.head = removedHead.nextnext;
+    this.length--;
+    if (this.length === 0) {
+      this.tail = null;
+    }
+    return removedHead;
+  }
+
+  unshift(val) {
+    let newNode = new Node(val);
+    if (!this.head) {
+      this.head = newNode;
+      this.tail = this.head;
+    } else {
+      newNode.next = this.head;
+      this.head = newNode;
+    }
+    this.length++;
+    return this;
+  }
+
+  get(index) {
+    if (index < 0 || index >= this.length) return null;
+    let counter = 0;
+    let current = this.head;
+    while (counter !== index) {
+      current = current.next;
+      counter++;
+    }
+    return current;
+  }
+
+  set(index, value) {
+    let foundNode = this.get(index);
+    if (foundNode) {
+      foundNode.val = value;
+      return true;
+    }
+    return false;
+  }
+
+  insert(index, value) {
+    let newNode = new Node(value);
+
+    if (index < 0 || index > this.length) return false;
+    if (index === this.length) return !!this.push(newNode);
+    if (index === 0) return !!this.unshift(newNode);
+    // !! dobule is going to convert a boolean... is like doing an else if statement and just doing this.push with the new node and then return true.
+    let previousNode = this.get(index - 1);
+    let temp = previousNode.next;
+    previousNode.next = newNode;
+    newNode.next = temp;
+    this.length++;
+    return true;
+  }
+  remove(index) {
+    if (index < 0 || index >= this.length) return undefined;
+
+    if (index === this.length - 1) return this.pop();
+    if (index === 0) return this.shift();
+
+    let previousNode = this.get(index - 1);
+    let toBeDeleted = previousNode.next;
+    previousNode.next = toBedeleted.next;
+    this.length--;
+
+    return toBeDeleted;
+  }
+
+  reverse() {
+    let node = this.head;
+    this.head = this.tail;
+    this.tail = node;
+    let next;
+    let previous = null;
+
+    for (let i = 0; i < this.length; i++) {
+      next = node.next;
+      node.next = previous;
+      previous = node;
+      node = next;
+    }
+    return this;
+  }
 }
