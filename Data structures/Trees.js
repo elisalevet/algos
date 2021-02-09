@@ -24,7 +24,7 @@ class Node {
     this.right = null;
   }
 }
-class BST {
+class BinarySearchTree {
   constructor() {
     this.root = null;
   }
