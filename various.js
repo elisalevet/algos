@@ -187,3 +187,233 @@ const explore = (grid, i, j) => {
 
   return 1;
 };
+
+function binarySearch(array, target) {
+  return helper(array, target, 0, array.length - 1);
+}
+
+const helper = (array, target, start, end) => {
+  if (start > end) return -1;
+  const middle = Math.floor((start + end) / 2);
+  const potentialTarget = array[middle];
+
+  if (target === potentialTarget) {
+    return middle;
+  } else if (target < potentialTarget) {
+    return helper(array, target, start, middle - 1);
+  } else {
+    return helper(array, target, middle + 1, end);
+  }
+};
+
+//Given a binary tree, populate an array to represent its level-by-level traversal. You should populate the values of all nodes of each level from left to right in separate sub-arrays.
+
+class TreeNode{
+  constructor(val){
+    this.val=val;
+    this.left=null;
+    this.right=null;
+  }
+}
+//print all the levels of the tree in sub arraysin order
+function traverse(root){
+  let result =[];
+  if(!root) return result;
+
+  let queue = []
+  queue.push(root)
+  whilt(queue.length>0){
+    const levelSize = queue.length
+    let currentLevel = []
+    for(let i=0; i<levelSize; i++) {
+      let currentNode = queue.shift()
+      currentLevel.push(currentNode.val)
+
+      if(currentNode.left !==null){
+        queue.push(currentNode.left)
+      }
+      if(currentNode.right !== null){
+        queue.push(currentNode.right)
+      }
+
+      result.push(currentLevel)
+    }
+  }
+}
+//same but in reverse
+function traverseReverse(root){
+  let result = []
+  if (!root) return result
+
+  let queue = [root]
+  while(queue.length> 0){
+    let levelsize = queue.length
+    let currentLevel = []
+
+    for (let i=0; i<levelSize;i++){
+      let currentNode= queue.shift();
+
+      currentLevel.push(currentNode.val)
+
+      if(currentNode.left!==null){
+        currentLevel.push(currentNode.left)
+      }
+      if(currentNode.right!==null){
+        currentLevel.push(currentNode.right)
+      }
+    }
+    result.ushift(currentLevel)
+  }
+  return result
+}
+
+//traverse but in zigzag
+
+function traverseZigzag (root) {
+  let result = []
+  if(!root)return result
+  let queue =[root]
+  let leftToRight = true
+
+  while(queue.length>0){
+    let levelSize = queue.length
+    let currentLevel = []
+    for(let i=0; i<levelSize; i++){
+      let curentNode = queue.shift()
+
+      if(leftToRight){
+        currentLevel.push(currentNode.val)
+      } else {
+        currentLevel.unshift(currentNode.val)
+      }
+
+      if(currentNode.left !==null){
+        currentLevel.push(currentNode.left)
+      }
+      if(currentNode.right !==null){
+        currentLevel.push(currentNode.right)
+      }
+    }
+    result.push(currentLevet)
+    leftToRight = !leftToRight
+  }
+  return result
+}
+
+
+//find average of its leveles
+
+function averageTree (root){
+  let result = []
+  if (!root) return result
+  let queue = [root]
+  while(queue.length> 0){
+    let levelSize = queue.length
+    let levelSum =0
+    for(let i=0; i<levelSize; i++){
+      let currentNode = queue.shift()
+      levelSum += currentNode.val
+
+      if(currentNode.left !==null){
+        queue.push(currentNode.left)
+      }
+      if(currentNode.right!==null){
+        queue.push(currentNode.right)
+      }
+    }
+    result.push(levelSum/levelSiza)
+  }
+  return result
+}
+
+
+//find minimum depth
+
+function findDepth (root) {
+  if(!root) return 0
+
+  let queue =[root]
+  let minimumDepth =0
+  while(queue.length>0){
+    minimumDepth ++
+    let levelSize= queue.length
+    for(let i=0; i<levelSize; i++){
+      let currentNode= queue.shift()
+
+      if (currentNode.left ===null  && currentNode.right ===null){
+        return minimumDepth
+      }
+      if(currentNode.left!==null){
+        queue.push(currentNode.left)
+      }
+      if(currentNode.right!==null){
+        queue.pushe(currentNode.right)
+      }
+    }
+  }
+}
+
+//for maximum depth its the same but we traverse all the way to the end and return out of the loop
+
+
+//DFS Given a binary tree and a number ‘S’, find if the tree has a path from root-to-leaf such that the sum of all the node values of that path equals ‘S’.
+
+function hasPath(root, sum){
+  if(!root) return false
+
+  // if the current node is a leaf and its value is equal to the sum, we've found a path
+  if (root.val===sum && root.left ===null && root.right===null){
+    return true
+  }
+   // recursively call to traverse the left and right sub-tree
+  // return true if any of the two recursive call return true
+  return hasPath(root.left, sum-root.val) || hasPath(root.right, sum-root.val)
+}
+
+
+//Given a binary tree and a number ‘S’, find all paths from root-to-leaf such that the sum of all the node values of each path equals ‘S’.
+
+function find_paths(root, sum) {
+  allPaths = [];
+  find_paths_recursive(root, sum, new Deque(), allPaths);
+  return allPaths;
+}
+
+
+function find_paths_recursive(currentNode, sum, currentPath, allPaths) {
+  if (currentNode === null) {
+    return;
+  }
+
+  // add the current node to the path
+  currentPath.push(currentNode.val);
+
+  // if the current node is a leaf and its value is equal to sum, save the current path
+  if (currentNode.val === sum && currentNode.left === null && currentNode.right === null) {
+    allPaths.push(currentPath.toArray());
+  } else {
+    // traverse the left sub-tree
+    find_paths_recursive(currentNode.left, sum - currentNode.val, currentPath, allPaths);
+    // traverse the right sub-tree
+    find_paths_recursive(currentNode.right, sum - currentNode.val, currentPath, allPaths);
+  }
+  // remove the current node from the path to backtrack,
+  // we need to remove the current node while we are going up the recursive call stack.
+  currentPath.pop();
+}
+
+
+var invertTree = function(root) {
+    const helperFunc = (node) => {
+        if (node !== null){
+             // let temp = node.left
+             // node.left= node.right
+             // node.right = temp
+             [node.left,node.right] = [node.right, node.left]
+             helperFunc(node.left)
+             helperFunc(node.right)
+        }
+    }
+    helperFunc(root)
+    return root
+};
