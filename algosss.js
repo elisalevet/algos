@@ -77,3 +77,48 @@ const ceasar_cipher = (string, offset) => {
 console.log(ceasar_cipher('abc', 1));
 console.log(ceasar_cipher('abc', -1));
 console.log(ceasar_cipher('abc', 52));
+
+//another soulition without charcode at
+
+function caesarCipherEncryptor(string, key) {
+  const newLetters = [];
+  const newKey = key % 26;
+  const abc = 'abcdefghijklmnopqrstuvwxyz'.split('');
+
+  for (const letter of string) {
+    newLetters.push(getNewLetter(letter, newKey, abc));
+  }
+  return newLetters.join('');
+}
+
+function getNewLetter(letter, key, abc) {
+  const newLetterCode = abc.indexOf(letter) + key;
+  return abc[newLetterCode % 26];
+}
+///
+
+function runLengthEncoding(string) {
+  let result = [];
+  let currentLength = 1;
+
+  for (let i = 1; i < string.length; i++) {
+    let currentChar = string[i];
+    let previousChar = string[i - 1];
+
+    if (currentChar !== previousChar || currentLength === 9) {
+      result.push(currentLength.toString());
+      console.log(result, 'primer result');
+      result.push(previousChar);
+      console.log(result, 'segundo result');
+      currentLength = 0;
+    }
+    currentLength++;
+  }
+
+  result.push(currentLength.toString());
+  result.push(string[string.length - 1]);
+
+  return result.join('');
+}
+
+console.log(runLengthEncoding('AAAAAAAAAAAAABBCCCCDD'));
