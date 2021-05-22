@@ -107,9 +107,8 @@ function runLengthEncoding(string) {
 
     if (currentChar !== previousChar || currentLength === 9) {
       result.push(currentLength.toString());
-      console.log(result, 'primer result');
       result.push(previousChar);
-      console.log(result, 'segundo result');
+  
       currentLength = 0;
     }
     currentLength++;
