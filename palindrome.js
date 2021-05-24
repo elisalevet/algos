@@ -21,3 +21,25 @@ const countPalindroms = (string) => {
 
 
 
+function generateDocument(characters, document) {
+ let map = {}
+
+ for(let char of characters) {
+   if (!(char in map)){
+     map[char] = 1
+   } else {
+     map[char] ++
+   }
+ }
+
+ for (let char of document){
+   if (!(char in map) || map[char]===0){
+     return false
+   } else {
+     map[char]--
+   }
+ }
+ return true
+}
+
+console.log(generateDocument('lavin hola elisa levet', 'elisa levet lavin hola'))

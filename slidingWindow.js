@@ -67,3 +67,39 @@ function find_averages_of_subarrays(K, arr) {
 
 const result = find_averages_of_subarrays(5, [1, 3, 2, 6, -1, 4, 1, 8, 2]);
 console.log(`Averages of subarrays of size K: ${result}`);
+
+const findAverage = (k, array) => {
+  let result = [];
+
+  for (let i = 0; i < array.length - k; i++) {
+    let sum = 0.0;
+    for (let j = i; j < i + k; j++) {
+      sum += array[j];
+    }
+    result.push(sum / k);
+  }
+
+  return result;
+};
+
+console.log(findAverage(5, [1, 3, 2, 6, -1, 4, 1, 8, 2]));
+
+const slidingWindow = (k, array) => {
+  let result = [];
+  let windowSum = 0.0;
+  let i = 0;
+
+  for (let j = 0; j < array.length; j++) {
+    windowSum += array[j];
+
+    if (j >= k - 1) {
+      result.push(windowSum / k);
+      windowSum -= array[i];
+      i++;
+    }
+  }
+
+  return result;
+};
+
+console.log(slidingWindow(5, [1, 3, 2, 6, -1, 4, 1, 8, 2]));
